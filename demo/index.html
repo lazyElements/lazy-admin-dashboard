@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>lazy-admin-dashboard demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../lazy-admin-dashboard.html">
+    <link rel="import" href="../lazy-admin-dashboard-styles.html">
+    <link rel="import" href="../../paper-material/paper-material.html" />
+    <link rel="import" href="../../paper-styles/paper-styles.html" />
+
+    <style>
+      body, html{
+        padding: 0px;
+        margin: 0px;
+      }
+
+      .cont{
+        height: 9999px;
+      }
+    </style>
+  </head>
+  <body>
+    <lazy-admin-dashboard>
+      <demo-test></demo-test>
+      <div class="cont"></div>
+    </lazy-admin-dashboard>
+    <dom-module id="demo-test">
+      <template>
+        <style include="iron-flex lazy-admin-dashboard-styles">
+        </style>
+        <paper-material>
+          123
+        </paper-material>
+        <div class="layout horizontal">
+          <paper-material class="flex">
+            123
+          </paper-material>
+          <paper-material class="flex">
+            123
+          </paper-material>
+        </div>
+        <div class="layout horizontal">
+          <paper-material class="flex alert error">
+            error
+          </paper-material>
+          <paper-material class="flex alert success">
+            success
+          </paper-material>
+          <paper-material class="flex alert warning">
+            warning
+          </paper-material>
+          <paper-material class="flex alert primary">
+            primary
+          </paper-material>
+        </div>
+      </template>
+      <script>
+        customElements.define("demo-test", class extends Polymer.Element{
+          static get is() { return "demo-test"; }
+          static get properties() {
+            return {
+
+            }
+          }
+          static get observers() {
+            return []
+          }
+          constructor() {
+            super();
+          }
+          connectedCallback() {
+            super.connectedCallback();
+          }
+          disconnectedCallback(){
+            super.disconnectedCallback()
+          }
+          ready() {
+            super.ready()
+          }
+        })
+      </script>
+    </dom-module>
+  </body>
+</html>

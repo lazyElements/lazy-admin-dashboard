@@ -1,0 +1,219 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../app-layout/app-layout.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
+<link rel="import" href="../lazy-pointfree/lazy-pointfree.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html" />
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html"/>
+<link rel="import" href="./lazy-admin-dashboard-styles.html" />
+<!--
+`lazy-admin-dashboard`
+
+
+@demo demo/index.html
+-->
+
+
+<dom-module id="lazy-admin-dashboard">
+  <template>
+    <style include="iron-flex">
+      :root{
+
+      }
+      :host{
+        display: block;
+        height: 100vh;
+        width: 100vw;
+      }
+      app-drawer .nav-toggle{
+        border-bottom: 1px solid #666;
+      }
+      app-drawer a{
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        padding: 12px;
+        display: block;
+      }
+      app-drawer iron-collapse{
+        background-color: #666;
+      }
+      app-drawer iron-collapse a {
+        font-size: 1.1rem;
+        padding: 6px 12px;
+      }
+      app-toolbar{
+        background-color: #444;
+        color: #fff;
+      }
+
+      app-drawer{
+        /*--app-drawer-width: 120px;*/
+        --app-drawer-content-container: {
+          background-color: var(--lazy-drawer-background, #333);
+          box-shadow: 0px 3px 10px rgba(255,255,255,.5);
+          color: #fff;
+        };
+      }
+
+      :host .auth-panel{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #666;
+        z-index: 1;
+        color: #eee;
+      }
+      :host .auth-popup{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        background: #333;
+        box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+        border-radius: 12px;
+        height: 400px;
+        width: 300px;
+        overflow: hidden;
+        @apply(--layout-vertical);
+      }
+      :host .auth-popup header{
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 48px;
+        border-bottom: 1px solid #666;
+      }
+      :host .auth-popup footer{
+        border-top: 1px solid #666;
+        line-height: 48px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 1.2rem;
+      }
+      :host .auth-popup footer:hover{
+        background: #444;
+        color:#FFF;
+        transition: .5s;
+        font-size: 1.3rem;
+      }
+      :host .main{
+        background: #f7f7f7;
+        padding: 6px;
+        box-sizing: border-box;;
+      }
+    </style>
+    <array-selector id="navOpened" items="{{nav}}" selected="{{navOpenedSelected}}" multi toggle></array-selector>
+    <dom-if if="[[!isAuth]]">
+      <template>
+        <div class="auth-panel">
+          <div class="auth-popup">
+            <header>[[authTitle]]</header>
+            <div class="flex">
+
+            </div>
+            <footer>
+              Login
+            </footer>
+          </div>
+        </div>
+      </template>
+    </dom-if>
+    <app-drawer-layout>
+      <app-drawer slot="drawer">
+        <dom-repeat items="[[nav]]">
+          <template>
+            <div class="nav-toggle">
+              <a href="javascript:void(0)" on-click="toggleNav">[[item.title]]</a>
+              <iron-collapse opened="[[isToggle(navOpenedSelected, item, navOpenedSelected.length)]]">
+                <dom-repeat items="[[item.children]]" as="subItem">
+                  <template>
+                    <a href="[[subItem.href]]">[[subItem.title]]</a>
+                  </template>
+                </dom-repeat>
+              </icon-collapse>
+            </div>
+          </template>
+        </dom-repeat>
+      </app-drawer>
+      <app-header-layout>
+        <app-header  slot="header" fixed condenses effects="waterfall">
+          <app-toolbar>
+            <div main-title>App name</div>
+            <paper-icon-button icon="icons:exit-to-app"></paper-icon-button>
+          </app-toolbar>
+        </app-header>
+        <div class="main">
+          <slot></slot>
+        </div>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+  <script>
+    customElements.define("lazy-admin-dashboard", class extends lazyPointfree(Polymer.Element){
+      static get is() { return "lazy-admin-dashboard"; }
+      static get properties() {
+        return {
+          authTitle: {
+            type: String,
+            value: "Admin Login"
+          },
+          nav: {
+            type: Object,
+            value: [{
+              title: "Title",
+              icon: "",
+              href: "",
+              children: [{
+                title: "SubTitle",
+                href: "/werw"
+              }]
+            }, {
+              title: "123123"
+            }]
+          },
+          isAuth: {
+            type: Boolean,
+            value: true
+          }
+        }
+      }
+      static get observers() {
+        return []
+      }
+      constructor() {
+        super();
+      }
+      connectedCallback() {
+        super.connectedCallback();
+      }
+      disconnectedCallback(){
+        super.disconnectedCallback()
+      }
+      ready() {
+        super.ready()
+      }
+      toggleNav(e) {
+        this.$.navOpened.select(e.model.item);
+      }
+      get isToggle() {
+        let indexOf = this.curry((arr, item) => {
+          return arr.indexOf(item);
+        });
+
+        let hasToggle = (num) => {
+          return num != -1;
+        }
+        return this.curry((items, target) => {
+          return this.pipe(
+            indexOf(items),
+            hasToggle
+          )(target);
+        });
+      }
+
+    })
+  </script>
+</dom-module>
