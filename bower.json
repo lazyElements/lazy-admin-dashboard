@@ -3,14 +3,14 @@
   "main": "lazy-admin-dashboard.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0-rc.2",
-    "app-layout": "2.0-preview",
-    "iron-collapse": "2.0-preview",
+    "app-layout": "^2.0.0",
+    "iron-collapse": "^2.0.0",
     "lazy-pointfree": "https://github.com/lazyElements/lazyPointfree.git",
-    "paper-button": "2.0-preview",
-    "paper-icon-button": "2.0-preview",
-    "iron-icons": "2.0-preview",
-    "paper-material": "2.0-preview",
-    "paper-styles": "2.0-preview"
+    "paper-button": "^2.0.0",
+    "paper-icon-button": "^2.0.0",
+    "iron-icons": "^2.0.0",
+    "paper-material": "^2.0.0",
+    "paper-styles": "^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
